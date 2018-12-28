@@ -105,16 +105,16 @@ typedef NS_OPTIONS(NSUInteger, SCPageLayouterNavigationContraintType) {
                    pageViewController:(SCPageViewController *)pageViewController;
 
 
-/** Returns the view controller sublayer transformation that should be used
+/** Returns the view controller view transformation that should be used
  * for the current offset
  *
  * @param index The index of the view controller in the Stack's children array
  * @param pageViewController The calling page view controller
- * @return The sublayer transformation to be applied
+ * @return The view transformation to be applied
  */
-- (CATransform3D)sublayerTransformForPageAtIndex:(NSUInteger)index
-                                   contentOffset:(CGPoint)contentOffset
-                              pageViewController:(SCPageViewController *)pageViewController;
+- (CGAffineTransform)transformForPageAtIndex:(NSUInteger)index
+                               contentOffset:(CGPoint)contentOffset
+                          pageViewController:(SCPageViewController *)pageViewController;
 
 
 /** Method that the pageController calls when its scrollView scrolls

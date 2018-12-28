@@ -610,10 +610,7 @@
         }
         
         remainder = [self _subtractRect:intersection fromRect:remainder withEdge:edge];
-        
-        CATransform3D previousTransform = viewController.view.layer.transform;
-        [self _setAnimatableSublayerTransform:CATransform3DIdentity forViewController:viewController];
-        
+                
         // Finally, trigger appearance callbacks and new frame
         if(visible && ![self.visibleControllers containsObject:viewController]) {
             [self.visibleControllers addObject:viewController];
@@ -639,14 +636,12 @@
             [viewController.view setFrame:nextFrame];
         }
         
-        if([self.layouter respondsToSelector:@selector(sublayerTransformForPageAtIndex:contentOffset:pageViewController:)]) {
-            CATransform3D transform = [self.layouter sublayerTransformForPageAtIndex:pageIndex
+        if([self.layouter respondsToSelector:@selector(transformForPageAtIndex:contentOffset:pageViewController:)]) {
+            CGAffineTransform transform = [self.layouter transformForPageAtIndex:pageIndex
                                                                        contentOffset:self.scrollView.contentOffset
                                                                   pageViewController:self];
             
-            [self _setAnimatableSublayerTransform:transform forViewController:viewController];
-        } else {
-            [self _setAnimatableSublayerTransform:previousTransform forViewController:viewController];
+            viewController.view.transform = transform;
         }
     }];
 }
@@ -933,13 +928,6 @@
     CGRect remainder, throwaway;
     CGRectDivide(r1, &throwaway, &remainder, chopAmount, edge);
     return remainder;
-}
-
-- (void)_setAnimatableSublayerTransform:(CATransform3D)transform forViewController:(UIViewController *)viewController
-{
-    for(CALayer *layer in viewController.view.layer.sublayers) {
-        [layer setTransform:transform];
-    }
 }
 
 - (void)_centerOnPageIndex:(NSUInteger)pageIndex
