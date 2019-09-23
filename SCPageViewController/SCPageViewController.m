@@ -9,8 +9,8 @@
 #import "SCPageViewController.h"
 #import "SCPageViewControllerView.h"
 
-#import "SCScrollView.h"
-#import "SCEasingFunction.h"
+#import <SCScrollView/SCScrollView.h>
+#import <SCScrollView/SCEasingFunction.h>
 #import "SCPageLayouterProtocol.h"
 
 
